@@ -31,10 +31,16 @@ If Object A wins the game against Object B, plugging in the value for new rating
 ## APIs developed
 
 ### 1. GET /GetPlayers
+
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
+</p>
+
 This API is used to get the list of players. We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have the items marked as deleted. Read more on why I decided to keep the soft delete approach below.
+
 ```
 REQUEST:
-GET /GetPlayers?<Parameter>
+GET /getPlayers?<Parameter>
 
 Parameter:
 - roomId: <string>
@@ -55,6 +61,11 @@ RESPONSE: (when sorted=false and unfiltered = true, notice there is element with
 
 
 ### 2. POST /CreateNewRoom
+
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/createNewRoom.png" alt="GetPlayers Diagram"/>
+</p>
+
 ```
 REQUEST:
 POST /CreateNewRoom
@@ -70,6 +81,11 @@ RESPONSE:
 ```
 
 ### 3. POST /EditRoom
+
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/editRoom.png" alt="GetPlayers Diagram"/>
+</p>
+
 ```
 REQUEST:
 POST /EditRoom
@@ -85,6 +101,11 @@ RESPONSE:
 ```
 
 ### 4. POST /UpdateRanking
+
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/updateRating.png" alt="GetPlayers Diagram"/>
+</p>
+
 ```
 REQUEST:
 POST /UpdateRanking
