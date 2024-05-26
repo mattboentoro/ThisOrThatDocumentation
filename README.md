@@ -100,6 +100,9 @@ Request Body:
 RESPONSE:
 ```
 
+#### Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
+Since the user (let’s call it User A) is “caching” the data for 1 round, there might be a case when another user (let’s call it User B), deleted one of the player in the room User A is playing. Therefore, if we delete the player, there might be a case of broken request (Lambda is trying to get the players which is deleted). Thus, if we mark the item, let’s say the request from User A comes through when User B “deletes” the player. The score can still be updated, and on the next round, User A can get updated information about the current state of the players, and they will not get the value that User B has deleted. (rewrite this)
+
 ### 4. POST /UpdateRanking
 
 <p align="center">
@@ -123,6 +126,3 @@ RESPONSE:
 #### Alternatives
 - Alter the DB directly from POST API.
 - Tradeoff: pros (cost, easy to setup), cons (not scalable)
-
-## Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
-
