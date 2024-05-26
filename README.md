@@ -120,4 +120,9 @@ Request Body:
 RESPONSE:
 ```
 
-## Why do I decide to keep the deleted 
+#### Alternatives
+- Alter the DB directly from POST API.
+- Tradeoff: pros (cost, easy to setup), cons (not scalable)
+
+## Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
+
