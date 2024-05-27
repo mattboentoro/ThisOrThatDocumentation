@@ -101,7 +101,7 @@ RESPONSE:
 ```
 
 #### Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
-Since the user (let’s call it User A) is “caching” the data for 1 round, there might be a case when another user (let’s call it User B), deleted one of the player in the room User A is playing. Therefore, if we delete the player, there might be a case of broken request (Lambda is trying to get the players which is deleted). Thus, if we mark the item, let’s say the request from User A comes through when User B “deletes” the player. The score can still be updated, and on the next round, User A can get updated information about the current state of the players, and they will not get the value that User B has deleted. (rewrite this)
+Let's say there are 2 users, User A and User B. User A caches data for one round, which can lead to issues if another user, User B, deletes a player in the room User A is in. If this happens, User A's request could fail because Lambda tries to access the deleted player. To prevent this, we can mark the player instead of immediately deleting it. This allows User A to update the score even if User B deletes the player. In the next round, User A will get the latest information and won't see the deleted player.
 
 ### 4. POST /UpdateRanking
 
