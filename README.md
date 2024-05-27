@@ -36,7 +36,7 @@ If Object A wins the game against Object B, plugging in the value for new rating
 
 ## APIs developed
 
-### 1. GET /GetPlayers
+### 1. GET `/GetPlayers`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
@@ -65,8 +65,9 @@ RESPONSE: (when sorted=false and unfiltered = true, notice there is element with
 ]
 ```
 
+---
 
-### 2. POST /CreateNewRoom
+### 2. POST `/CreateNewRoom`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/createNewRoom.png" alt="GetPlayers Diagram"/>
@@ -96,7 +97,9 @@ Status Code: 200
 {"acknowledged":true,"insertedId":"<random-id>"}
 ```
 
-### 3. POST /EditRoom
+---
+
+### 3. POST `/EditRoom`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/editRoom.png" alt="GetPlayers Diagram"/>
@@ -132,7 +135,9 @@ Consider a scenario with two users, User A and User B. User A caches data for on
 
 To avoid this issue, we can mark the `Object of Comparison` as deleted instead of immediately removing them. This way, the `UpdateRating` Lambda function can still update User A’s SQS message to update the score, even though User B has deleted the `Object of Comparison`. In the following round, User A will receive the most recent data and will no longer see the deleted `Object of Comparison`.
 
-### 4. POST /UpdateRating
+---
+
+### 4. POST `/UpdateRating`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/updateRating.png" alt="GetPlayers Diagram"/>
@@ -218,6 +223,8 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
 
 #### Verdict
 Since I want to make the system scalable, I decided to use the SQS approach.
+
+---
 
 ## How do we get all players combinations to be paired?
 I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
