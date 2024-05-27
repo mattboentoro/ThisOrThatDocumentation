@@ -102,18 +102,29 @@ Status Code: 200
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/editRoom.png" alt="GetPlayers Diagram"/>
 </p>
 
+This API sets the content of the `roomId` to be `players`. Essentially, all the logic of setting `DELETED` status is handled in the front-end. The back-end simply gets the `players` payload, and overwrite the existing `players` with the new one provided on the payload. 
+
 ```
 REQUEST:
 POST /EditRoom
 
 Request Body:
 {
-
+  roomId: "12349"
+  players:
+    [
+      {"playerId":"0", "playerRating":1080, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
+      {"playerId":"1", "playerRating":980, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
+      {"playerId":"2", "playerRating":1200, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
+      {"playerId":"3", "playerRating":1200, "name":"Airbus A350", "image":"<random image link>", "status":"DELETED"},
+    ]
 }
 ```
 
 ```
 RESPONSE:
+Status Code: 200
+{"acknowledged":true,"insertedId":"<random-id>"}
 ```
 
 #### Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
