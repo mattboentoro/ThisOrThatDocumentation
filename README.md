@@ -1,7 +1,7 @@
 # This or That Application
 
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-1.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-1.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 ## What exactly is this app doing?
@@ -10,30 +10,30 @@ This app enables users to create multiple comparison rooms where votes determine
 ## Functionalities currently supported
 1. Users can create a room and list the items or people they want others to vote on.
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-4.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-4.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/editRoomFlow2.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow2.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-4.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-4.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 3. Users can get a room, vote, and have the `rating score` updated on the backend.
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/playFlow.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`.
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/leaderboardFlow.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-3.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 ## What exactly is this `rating score`?
@@ -60,7 +60,7 @@ If Object A wins the game against Object B, plugging in the value for new rating
 ### 1. GET `/GetPlayers`
 
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
 </p>
 
 This API is used to get the list of `Object of Comparison`. We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have all items, including items that are marked as deleted. Read more on why I decided to keep the soft delete approach below.
@@ -91,7 +91,7 @@ RESPONSE: (when sorted=false and unfiltered = true, notice there is element with
 ### 2. POST `/CreateNewRoom`
 
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/createNewRoom.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoom.png" alt="GetPlayers Diagram"/>
 </p>
 
 This API creates a room with a specified `roomId` and a list of players. When a new room is created, every player starts with a score of 1000, which is managed by the front end. The front end also validates whether a room with the given `roomId` already exists. When the user enters a `roomId`, a request is sent to the /getPlayers API to retrieve the current list of `Object of Comparison`. If no such room exists, the API is then called.
@@ -123,7 +123,7 @@ Status Code: 200
 ### 3. POST `/EditRoom`
 
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/editRoom.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoom.png" alt="GetPlayers Diagram"/>
 </p>
 
 This API sets the content of the `roomId` to be `players`. Essentially, all the logic of setting `DELETED` status is handled in the front-end. The back-end simply gets the `players` payload, and overwrite the existing `players` with the new one provided on the payload. 
@@ -161,7 +161,7 @@ To avoid this issue, we can mark the `Object of Comparison` as deleted instead o
 ### 4. POST `/UpdateRating`
 
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/updateRating.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/updateRating.png" alt="GetPlayers Diagram"/>
 </p>
 
 When the user submits the `/updateRanking` POST API call, API Gateway then triggers the `SendToSQSQueueFunction` Lambda function upon receiving the POST request. This Lambda function processes the initial request and sends a message to the SQS queue. The SQS queue acts as a buffer, decoupling the request processing from the response. Subsequently, Worker `UpdateRatingFunction` Lambda functions poll the SQS queue, process the messages, and update the ratings on MongoDB.
