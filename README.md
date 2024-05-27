@@ -101,7 +101,9 @@ RESPONSE:
 ```
 
 #### Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
-Let's say there are 2 users, User A and User B. User A caches data for one round, which can lead to issues if another user, User B, deletes a player in the room User A is in. If this happens, User A's request could fail because Lambda tries to access the deleted player. To prevent this, we can mark the player instead of immediately deleting it. This allows User A to update the score even if User B deletes the player. In the next round, User A will get the latest information and won't see the deleted player.
+Consider a scenario with two users, User A and User B. User A caches data for one round, which can cause problems if User B deletes an `Object of Comparison` in the room that User A is in. If this deletion occurs, User A's message request in the SQS queue could fail because the Lambda function will try to access the now-deleted `Object of Comparison` from the MongoDB.
+
+To avoid this issue, we can mark the `Object of Comparison` as deleted instead of immediately removing them. This way, the `UpdateRating` Lambda function can still update User A’s SQS message to update the score, even though User B has deleted the `Object of Comparison`. In the following round, User A will receive the most recent data and will no longer see the deleted `Object of Comparison`.
 
 ### 4. POST /UpdateRanking
 
