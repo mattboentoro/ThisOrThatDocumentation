@@ -7,7 +7,7 @@
 ## What exactly is this app doing?
 This app enables users to create multiple comparison rooms where votes determine the rankings. Users can set up a room, list items or people for comparison, and invite others to vote. It is inspired by Mark Zuckerberg's [Facemash application](https://thesocialnetwork.fandom.com/wiki/Facemash).
 
-## Functionalities currently supported
+## Core functionalities supported
 1. Users can create a room and list the items or people they want others to vote on.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
@@ -35,6 +35,15 @@ This app enables users to create multiple comparison rooms where votes determine
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
+
+## Additional functionalities
+
+- [x] Use React-Router to allow direct access to all pages from the URL (like `<URL>/play/<roomId>`).
+- [ ] Support room deletion.
+- [ ] Support edit individual `Object of Comparison` after added.
+- [ ] Validate the API calls on the front-end, and return error message accordingly.
+
+
 
 ## What exactly is this `rating score`?
 This `rating score` is [Elo-rating](https://en.wikipedia.org/wiki/Elo_rating_system#Theory). Let's say two `Object of Comparison` compete, Object A and Object B. Object A has a rating of 1500 ($R_A = 1500$), while Object B has a rating of 1000 ($R_B = 1000$). We can calculate the expected score of Object A (expressed as $E_A$) and the expected score of Object B ($E_B$) using below's formula:
