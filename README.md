@@ -5,8 +5,14 @@ This app enables users to create multiple comparison rooms where votes determine
 
 ## Functionalities currently supported
 1. Users can create a room and list the items or people they want others to vote on.
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
+</p>
 
 2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/editRoomFlow.png" alt="GetPlayers Diagram"/>
+</p>
 
 3. Users can get a room, vote, and have the `rating score` updated on the backend.
 <p align="center">
