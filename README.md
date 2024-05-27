@@ -14,6 +14,9 @@ This app enables users to create multiple comparison rooms where votes determine
 </p>
 
 4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`.
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/leaderboardFlow.png" alt="GetPlayers Diagram"/>
+</p>
 
 ## What exactly is this `rating score`?
 This `rating score` is [Elo-rating](https://en.wikipedia.org/wiki/Elo_rating_system#Theory). Let's say two `Object of Comparison` compete, Object A and Object B. Object A has a rating of 1500 ($R_A = 1500$), while Object B has a rating of 1000 ($R_B = 1000$). We can calculate the expected score of Object A (expressed as $E_A$) and the expected score of Object B ($E_B$) using below's formula:
