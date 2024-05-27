@@ -156,4 +156,13 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
   - Additional costs associated with SQS and multiple Lambda invocations.
 
 #### Verdict
-Since I want to make the system to be scalable, I decided to use SQS approach.
+Since I want to make the system scalable, I decided to use the SQS approach.
+
+
+## Helpful links that helped me during the project:
+
+- https://github.com/tournament-js/roundrobin?tab=readme-ov-file 
+- https://www.mongodb.com/docs/manual/reference/operator/update/inc/
+- https://www.mongodb.com/community/forums/t/mongodb-update-a-value-in-array-of-object-of-array/208302
+- https://www.mongodb.com/developer/products/atlas/serverless-development-lambda-atlas/
+- https://sadam-bapunawar.medium.com/add-and-remove-form-fields-dynamically-using-react-and-react-hooks-3b033c3c0bf5
