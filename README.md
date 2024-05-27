@@ -202,6 +202,8 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
 #### Verdict
 Since I want to make the system scalable, I decided to use the SQS approach.
 
+## How do we get all players combinations to be paired?
+I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
 
 ## Helpful links that helped me during the project:
 
