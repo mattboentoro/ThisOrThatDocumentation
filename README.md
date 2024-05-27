@@ -4,10 +4,16 @@
 This app enables users to create multiple comparison rooms where votes determine the rankings. Users can set up a room, list items or people for comparison, and invite others to vote. It is inspired by Mark Zuckerberg's [Facemash application](https://thesocialnetwork.fandom.com/wiki/Facemash).
 
 ## Functionalities currently supported
-- A user can create a room and list the items or people they want others to vote on.
-- A user can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
-- A user can get a room, vote, and have the `rating score` updated on the backend.
-- A user can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`.
+1. Users can create a room and list the items or people they want others to vote on.
+
+2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
+
+3. Users can get a room, vote, and have the `rating score` updated on the backend.
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/playFlow.png" alt="GetPlayers Diagram"/>
+</p>
+
+4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`.
 
 ## What exactly is this `rating score`?
 This `rating score` is [Elo-rating](https://en.wikipedia.org/wiki/Elo_rating_system#Theory). Let's say two `Object of Comparison` compete, Object A and Object B. Object A has a rating of 1500 ($R_A = 1500$), while Object B has a rating of 1000 ($R_B = 1000$). We can calculate the expected score of Object A (expressed as $E_A$) and the expected score of Object B ($E_B$) using below's formula:
