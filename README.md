@@ -1,5 +1,9 @@
 # This or That Application
 
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-1.png" width="600" alt="GetPlayers Diagram"/>
+</p>
+
 ## What exactly is this app doing?
 This app enables users to create multiple comparison rooms where votes determine the rankings. Users can set up a room, list items or people for comparison, and invite others to vote. It is inspired by Mark Zuckerberg's [Facemash application](https://thesocialnetwork.fandom.com/wiki/Facemash).
 
@@ -7,21 +11,29 @@ This app enables users to create multiple comparison rooms where votes determine
 1. Users can create a room and list the items or people they want others to vote on.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
+  <br/><br/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-4.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/editRoomFlow2.png" alt="GetPlayers Diagram"/>
+  <br/><br/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-4.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 3. Users can get a room, vote, and have the `rating score` updated on the backend.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/playFlow.png" alt="GetPlayers Diagram"/>
+  <br/><br/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/leaderboardFlow.png" alt="GetPlayers Diagram"/>
+  <br/><br/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/this-or-that-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 ## What exactly is this `rating score`?
