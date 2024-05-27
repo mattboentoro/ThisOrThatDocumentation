@@ -36,7 +36,7 @@ If Object A wins the game against Object B, plugging in the value for new rating
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
 </p>
 
-This API is used to get the list of `Object of Comparison`. We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have the items marked as deleted. Read more on why I decided to keep the soft delete approach below.
+This API is used to get the list of `Object of Comparison`. We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have all items, including items that are marked as deleted. Read more on why I decided to keep the soft delete approach below.
 
 ```
 REQUEST:
