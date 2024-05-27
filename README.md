@@ -125,7 +125,31 @@ When the user submits the `/updateRanking` POST API call, API Gateway then trigg
 
 I opted to cache the `playerRating` for all `Object of Comparison` on the front end. This means the Worker `UpdateRatingFunction` Lambda function won't need to constantly query MongoDB for ratings, reducing the number of database reads. However, this also means that until the round ends, comparison objects will retain their ratings as they were when the user first loaded the game on the front end. Once all pairs have been compared, the front end will invoke the `/getPlayers` API, resetting the cache and providing the user with accurate information at the time of the API request submission.
 
-(Explain why I use the cached playerRating instead of relying on the lambda to call the DB every single time)
+#### `UpdateRating` Lambda Function (Worker Function) Logic
+
+I've chosen to calculate the difference in `Object of Comparison`'s ratings and delegate the task of incrementing the MongoDB value to the SQS Worker `UpdateRatingFunction` Lambda. With users having a cache of player ratings, we can utilize it to compute the difference between old and new ratings for both players. This difference is then incremented to MongoDB by the SQS Worker `UpdateRatingFunction` Lambda.
+
+Why opt for incrementing/decrementing the difference instead of directly updating to the new rating in the Worker `UpdateRatingFunction` Lambda? Consider this scenario: two identical SQS messages arrive simultaneously from different users playing at the same time.
+
+```
+{
+  "roomId": "12345",
+  "losingPlayerId": "1",
+  "losingPlayerRating": 1500,
+  "winningPlayerId": "2",
+  "winningPlayerRating": 1000
+},
+{
+  "roomId": "12345",
+  "losingPlayerId": "1",
+  "losingPlayerRating": 1500,
+  "winningPlayerId": "2",
+  "winningPlayerRating": 1000
+}
+```
+
+According to the earlier Elo-Score calculation, `Object of Comparison` with ID `2` should gain an additional `30 + 30 = 60` points, resulting in a rating of `1060`. However, if we directly set the value (instead of using increment) from the Worker Lambda, we'll only obtain `1030`, which was the last rating value written by the last message from the queue (as values get overwritten). Since the calculation is independent for each message using the information provided from the JSON, using an increment method ensures that the score can be updated to reflect all votes. This approach enables us to still obtain a close-to-accurate rating from the cached values.
+
 
 ```
 REQUEST:
@@ -177,23 +201,6 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
 
 #### Verdict
 Since I want to make the system scalable, I decided to use the SQS approach.
-
-#### UpdateRating Lambda Function (Worker Function) Logic
-- Decided to get the difference in the ratings of the players.
-In case of parallel processing, we can get away with not-so-up-to-date player rating. This reduces the need for constantly reading from the database for latest rating.
-
-Initially, when user is getting the list of player, we can give them the rating of the players too. This allows the user to "cache" the player rating.
-
-When the user is selecting, these informations are passed:
-- Winning player ID
-- Losing player ID
-- Winning player rating
-- Losing player rating
-- Room ID (as different room might have different player ID)
-
-This allows the API to pass through the information to SQS, which can compute the new rating by incrementing the old result with the result obtained by this function
-
-If we are getting the new rating from here, we can't use the "cache" since it will only trigger the rating change from the last items processed. We need to use the up-to-date rating, which will increase the DB read in this case. (rewrite)
 
 
 ## Helpful links that helped me during the project:
