@@ -111,6 +111,8 @@ To avoid this issue, we can mark the `Object of Comparison` as deleted instead o
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/updateRating.png" alt="GetPlayers Diagram"/>
 </p>
 
+The client sends a POST request to the API Gateway. The API Gateway then triggers a Lambda function upon receiving the POST request. This Lambda function processes the initial request and sends a message to an SQS queue. The SQS queue acts as a buffer, decoupling the request processing from the response. Subsequently, Worker Lambda functions poll the SQS queue, process the messages, and handle the business logic. (add some logic)
+
 ```
 REQUEST:
 POST /UpdateRanking
