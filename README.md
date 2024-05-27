@@ -127,6 +127,33 @@ Request Body:
 RESPONSE:
 ```
 
-#### Alternatives
-- Alter the DB directly from POST API.
-- Tradeoff: pros (cost, easy to setup), cons (not scalable)
+#### Alternative 1: Direct Handling (Not Recommended)
+
+The other approach is to handle the update rating on the lambda which is directly invoked by the `/updateRating` API.
+
+The client sends a POST request to the `/updateRating` API. The API Gateway receives this request and directly triggers a Lambda function. This Lambda function immediately handles the request, performs the necessary processing to update the rating, and returns a response to the client.
+
+**Pros**:
+  - Simpler architecture with fewer components.
+  - Lower latency with immediate processing.
+  - Potential cost savings from fewer services being used.
+
+**Cons**:
+  - Scalability issues and potential bottlenecks under high load.
+  - Less fault tolerance and resilience without SQS.
+  - More complex load management within a single Lambda function.
+
+
+#### Alternative 2: Using SQS Approach (Recommended, Chosen)
+**Pros**:
+  - Better scalability and load handling due to decoupling.
+  - Improved fault tolerance with message retry mechanisms.
+  - Resilience to traffic spikes, as SQS can buffer requests.
+
+**Cons**:
+  - Added complexity with more components to manage.
+  - Potentially higher latency due to asynchronous processing.
+  - Additional costs associated with SQS and multiple Lambda invocations.
+
+#### Verdict
+Since I want to make the system to be scalable, I decided to use SQS approach.
