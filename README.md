@@ -36,7 +36,7 @@ If Object A wins the game against Object B, plugging in the value for new rating
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
 </p>
 
-This API is used to get the list of players. We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have the items marked as deleted. Read more on why I decided to keep the soft delete approach below.
+This API is used to get the list of `Object of Comparison`. We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have the items marked as deleted. Read more on why I decided to keep the soft delete approach below.
 
 ```
 REQUEST:
@@ -66,18 +66,28 @@ RESPONSE: (when sorted=false and unfiltered = true, notice there is element with
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/createNewRoom.png" alt="GetPlayers Diagram"/>
 </p>
 
+This API creates a room with a specified `roomId` and a list of players. When a new room is created, every player starts with a score of 1000, which is managed by the front end. The front end also validates whether a room with the given `roomId` already exists. When the user enters a `roomId`, a request is sent to the /getPlayers API to retrieve the current list of `Object of Comparison`. If no such room exists, the API is then called.
+
 ```
 REQUEST:
 POST /CreateNewRoom
 
 Request Body:
 {
-
+  roomId: "12349"
+  players:
+    [
+      {"playerId":"0", "playerRating":1000, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
+      {"playerId":"1", "playerRating":1000, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
+      {"playerId":"2", "playerRating":1000, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
+    ]
 }
 ```
 
 ```
 RESPONSE:
+Status Code: 200
+{"acknowledged":true,"insertedId":"<random-id>"}
 ```
 
 ### 3. POST /EditRoom
@@ -105,7 +115,7 @@ Consider a scenario with two users, User A and User B. User A caches data for on
 
 To avoid this issue, we can mark the `Object of Comparison` as deleted instead of immediately removing them. This way, the `UpdateRating` Lambda function can still update User A’s SQS message to update the score, even though User B has deleted the `Object of Comparison`. In the following round, User A will receive the most recent data and will no longer see the deleted `Object of Comparison`.
 
-### 4. POST /UpdateRanking
+### 4. POST /UpdateRating
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/updateRating.png" alt="GetPlayers Diagram"/>
@@ -113,21 +123,31 @@ To avoid this issue, we can mark the `Object of Comparison` as deleted instead o
 
 When the user submits the `/updateRanking` POST API call, API Gateway then triggers the `SendToSQSQueueFunction` Lambda function upon receiving the POST request. This Lambda function processes the initial request and sends a message to the SQS queue. The SQS queue acts as a buffer, decoupling the request processing from the response. Subsequently, Worker `UpdateRatingFunction` Lambda functions poll the SQS queue, process the messages, and update the ratings on MongoDB.
 
+I opted to cache the `playerRating` for all `Object of Comparison` on the front end. This means the Worker `UpdateRatingFunction` Lambda function won't need to constantly query MongoDB for ratings, reducing the number of database reads. However, this also means that until the round ends, comparison objects will retain their ratings as they were when the user first loaded the game on the front end. Once all pairs have been compared, the front end will invoke the `/getPlayers` API, resetting the cache and providing the user with accurate information at the time of the API request submission.
+
+(Explain why I use the cached playerRating instead of relying on the lambda to call the DB every single time)
+
 ```
 REQUEST:
 POST /UpdateRanking
 
 Request Body:
 {
-
+  roomId: "12345",
+  losingPlayerId: "3",
+  losingPlayerRating: 909,
+  winningPlayerId: "1"
+  winningPlayerRating: 1105
 }
 ```
 
 ```
 RESPONSE:
+Status Code: 200
+{"message":"Message sent to SQS","messageId":"<randomId>"}
 ```
 
-#### Alternative 1: Direct Handling (Not Recommended)
+#### Architectural Alternative 1: Direct Handling (Not Recommended)
 
 The other approach is to handle the update rating on the lambda which is directly invoked by the `/updateRating` API.
 
@@ -144,7 +164,7 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
   - More complex load management within a single Lambda function.
 
 
-#### Alternative 2: Using SQS Approach (Recommended, Chosen)
+##### Chosen Alternative 2: Using SQS Approach
 **Pros**:
   - Better scalability and load handling due to decoupling.
   - Improved fault tolerance with message retry mechanisms.
@@ -157,6 +177,23 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
 
 #### Verdict
 Since I want to make the system scalable, I decided to use the SQS approach.
+
+#### UpdateRating Lambda Function (Worker Function) Logic
+- Decided to get the difference in the ratings of the players.
+In case of parallel processing, we can get away with not-so-up-to-date player rating. This reduces the need for constantly reading from the database for latest rating.
+
+Initially, when user is getting the list of player, we can give them the rating of the players too. This allows the user to "cache" the player rating.
+
+When the user is selecting, these informations are passed:
+- Winning player ID
+- Losing player ID
+- Winning player rating
+- Losing player rating
+- Room ID (as different room might have different player ID)
+
+This allows the API to pass through the information to SQS, which can compute the new rating by incrementing the old result with the result obtained by this function
+
+If we are getting the new rating from here, we can't use the "cache" since it will only trigger the rating change from the last items processed. We need to use the up-to-date rating, which will increase the DB read in this case. (rewrite)
 
 
 ## Helpful links that helped me during the project:
