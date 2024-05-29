@@ -284,7 +284,7 @@ I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobi
 - [ ] Support room deletion.
 - [x] <s>Support edit individual `Object of Comparison` after added.</s>
 - [x] <s>Validate the API calls on the front-end, and return error message accordingly.</s>
-- [ ] Support [versioning](https://www.liquibase.com/resources/guides/database-version-control#:~:text=Database%20versioning%20is%20applying%20version,changes%20with%20precision%20and%20reliability.) for `updateRoom`.
+- [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
 
 ## Helpful links that helped me during the project:
 
