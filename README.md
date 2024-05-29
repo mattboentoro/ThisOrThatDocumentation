@@ -144,12 +144,30 @@ POST /EditRoom
 Request Body:
 {
   roomId: "12349"
-  players:
+  changes:
     [
-      {"playerId":"0", "playerRating":1080, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
-      {"playerId":"1", "playerRating":980, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
-      {"playerId":"2", "playerRating":1200, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
-      {"playerId":"3", "playerRating":1200, "name":"Airbus A350", "image":"<random image link>", "status":"DELETED"},
+      {
+          "playerId": "3",
+          "change": "DELETE"
+      },
+      {
+          "playerId": "5",
+          "change": "EDIT",
+          "values": {
+              "name": "Porsche Macan"
+          }
+      },
+      {
+          "playerId": "9",
+          "change": "CREATE",
+          "values": {
+              "playerId": "9",
+              "name": "BMW iX",
+              "image": "https://hips.hearstapps.com/hmg-prod/images/2023-bmw-ix-m60-108-1653422436.jpg?crop=0.728xw:0.820xh;0.160xw,0.0264xh&resize=768:*",
+              "playerRating": 1000,
+              "status": "ACTIVE"
+          }
+      }
     ]
 }
 ```
