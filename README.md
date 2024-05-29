@@ -17,7 +17,7 @@ This app enables users to create multiple comparison rooms where votes determine
 
 2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow2.png" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow3.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-4.png" width="600" alt="GetPlayers Diagram"/>
 </p>
@@ -40,8 +40,8 @@ This app enables users to create multiple comparison rooms where votes determine
 
 - [x] Use React-Router to allow direct access to all pages from the URL (like `<URL>/play/<roomId>`).
 - [ ] Support room deletion.
-- [ ] Support edit individual `Object of Comparison` after added.
-- [ ] Validate the API calls on the front-end, and return error message accordingly.
+- [x] Support edit individual `Object of Comparison` after added.
+- [x] Validate the API calls on the front-end, and return error message accordingly.
 
 
 
