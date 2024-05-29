@@ -114,9 +114,9 @@ Request Body:
   roomId: "12349"
   players:
     [
-      {"playerId":"0", "playerRating":1000, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
-      {"playerId":"1", "playerRating":1000, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
-      {"playerId":"2", "playerRating":1000, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
+      {"playerId":"<uuid>", "playerRating":1000, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
+      {"playerId":"<uuid>", "playerRating":1000, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
+      {"playerId":"<uuid>", "playerRating":1000, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
     ]
 }
 ```
@@ -135,7 +135,7 @@ Status Code: 200
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoom.png" alt="GetPlayers Diagram"/>
 </p>
 
-This API sets the content of the `roomId` to be `players`. Essentially, all the logic of setting `DELETED` status is handled in the front-end. The back-end simply gets the `players` payload, and overwrite the existing `players` with the new one provided on the payload. 
+This API sets the content of the `roomId` to be `players`. Essentially, all the logic of setting `DELETED` status is handled in the front-end. The back-end will loop through the changes, and make the change according to the `changes` from the request.
 
 ```
 REQUEST:
@@ -161,7 +161,7 @@ Request Body:
           "playerId": "9",
           "change": "CREATE",
           "values": {
-              "playerId": "9",
+              "playerId": "<uuid>",
               "name": "BMW iX",
               "image": "https://hips.hearstapps.com/hmg-prod/images/2023-bmw-ix-m60-108-1653422436.jpg?crop=0.728xw:0.820xh;0.160xw,0.0264xh&resize=768:*",
               "playerRating": 1000,
@@ -175,13 +175,19 @@ Request Body:
 ```
 RESPONSE:
 Status Code: 200
-{"acknowledged":true,"insertedId":"<random-id>"}
+"Success"
 ```
 
 #### Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
 Consider a scenario with two users, User A and User B. User A caches data for one round, which can cause problems if User B deletes an `Object of Comparison` in the room that User A is in. If this deletion occurs, User A's message request in the SQS queue could fail because the Lambda function will try to access the now-deleted `Object of Comparison` from the MongoDB.
 
 To avoid this issue, we can mark the `Object of Comparison` as deleted instead of immediately removing them. This way, the `UpdateRating` Lambda function can still update User A’s SQS message to update the score, even though User B has deleted the `Object of Comparison`. In the following round, User A will receive the most recent data and will no longer see the deleted `Object of Comparison`.
+
+#### Why am I just keeping the changes log and not overwriting everything?
+
+Let's consider two users, User A and User B, who attempt to access the edit room functionality simultaneously. If the system simply overwrites values, the final value retained in the system will be from the user who submits their editRoom request last, resulting in the earlier submission being overwritten.
+
+If we implement a change log system, we can handle these requests in parallel without losing any information. Each request can be recorded as a distinct entry in the change log, capturing all changes made by both users. This way, the system does not need to wait for one request to complete before processing the next one, thereby potentially saving time and improving efficiency. Additionally, using a change log allows for better tracking of changes and conflict resolution, ensuring that all user edits are preserved and can be merged or reviewed as needed.
 
 ---
 
