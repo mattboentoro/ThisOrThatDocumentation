@@ -39,14 +39,6 @@ This app enables users to create multiple comparison rooms where votes determine
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-## Additional functionalities
-
-- [x] Use React-Router to allow direct access to all pages from the URL (like `<URL>/play/<roomId>`).
-- [ ] Support room deletion.
-- [x] Support edit individual `Object of Comparison` after added.
-- [x] Validate the API calls on the front-end, and return error message accordingly.
-
-
 
 ## What exactly is this `rating score`?
 This `rating score` is [Elo-rating](https://en.wikipedia.org/wiki/Elo_rating_system#Theory). Let's say two `Object of Comparison` compete, Object A and Object B. Object A has a rating of 1500 ($R_A = 1500$), while Object B has a rating of 1000 ($R_B = 1000$). We can calculate the expected score of Object A (expressed as $E_A$) and the expected score of Object B ($E_B$) using below's formula:
@@ -285,6 +277,14 @@ Since I want to make the system scalable, I decided to use the SQS approach.
 
 ## How do we get all players combinations to be paired?
 I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
+
+## Future works
+
+- [x] <s>Use React-Router to allow direct access to all pages from the URL (like `<URL>/play/<roomId>`).</s>
+- [ ] Support room deletion.
+- [x] <s>Support edit individual `Object of Comparison` after added.</s>
+- [x] <s>Validate the API calls on the front-end, and return error message accordingly.</s>
+- [ ] Support [versioning](https://www.liquibase.com/resources/guides/database-version-control#:~:text=Database%20versioning%20is%20applying%20version,changes%20with%20precision%20and%20reliability.) for `updateRoom`.
 
 ## Helpful links that helped me during the project:
 
