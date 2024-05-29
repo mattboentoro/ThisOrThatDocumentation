@@ -311,6 +311,7 @@ I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobi
 - [x] <s>Validate the API calls on the front-end, and return error message accordingly.</s>
 - [x] <s>Support statistics (vote count), and show the number of votes on the home screen.</s>
 - [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
+- [ ] Make an explore page for `roomId`.
 
 ## Helpful links that helped me during the project:
 
