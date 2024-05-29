@@ -7,14 +7,14 @@
 This app enables users to create multiple comparison rooms where votes determine the rankings. Users can set up a room, list items or people for comparison, and invite others to vote. It is inspired by Mark Zuckerberg's [Facemash application](https://thesocialnetwork.fandom.com/wiki/Facemash).
 
 ## Core functionalities supported
-1. Users can create a room and list the items or people they want others to vote on.
+### 1. Users can create a room and list the items or people they want others to vote on.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-7.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
+### 2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow3.png" alt="GetPlayers Diagram"/>
   <br/><br/>
@@ -25,19 +25,21 @@ This app enables users to create multiple comparison rooms where votes determine
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-6.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-3. Users can get a room, vote, and have the `rating score` updated on the backend.
+### 3. Users can get a room, vote, and have the `rating score` updated on the backend.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`.
+### 4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`, as well as showing the total number of people voting on the room.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
+
+### 5. Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room.
 
 
 ## What exactly is this `rating score`?
@@ -284,6 +286,7 @@ I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobi
 - [ ] Support room deletion.
 - [x] <s>Support edit individual `Object of Comparison` after added.</s>
 - [x] <s>Validate the API calls on the front-end, and return error message accordingly.</s>
+- [x] <s>Support statistics (vote count), and show the number of votes on the home screen.</s>
 - [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
 
 ## Helpful links that helped me during the project:
@@ -294,3 +297,4 @@ I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobi
 - https://www.mongodb.com/developer/products/atlas/serverless-development-lambda-atlas/
 - https://sadam-bapunawar.medium.com/add-and-remove-form-fields-dynamically-using-react-and-react-hooks-3b033c3c0bf5
 - https://stackoverflow.com/questions/36734201/how-to-convert-numbers-to-million-in-javascript
+- https://stackoverflow.com/questions/17044587/how-to-aggregate-sum-in-mongodb-to-get-a-total-count
