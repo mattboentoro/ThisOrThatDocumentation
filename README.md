@@ -277,6 +277,29 @@ Since I want to make the system scalable, I decided to use the SQS approach.
 
 ---
 
+### 5. GET `/GetStatistics`
+
+```
+REQUEST:
+POST /GetStatistics
+```
+
+```
+RESPONSE:
+Status Code: 200
+{
+  "totalVotesCount":50,
+  "mostPopularRoom":
+      {
+        "_id":"66569ff357a1050cb28c9709",
+        "roomId":"123456",
+        "votesCount":26
+      }
+}
+```
+
+---
+
 ## How do we get all players combinations to be paired?
 I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
 
