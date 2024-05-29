@@ -41,6 +41,7 @@ This app enables users to create multiple comparison rooms where votes determine
 
 ### 5. Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room.
 <p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/seeStatisticsFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
@@ -72,7 +73,7 @@ If Object A wins the game against Object B, plugging in the value for new rating
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
 </p>
 
-This API is used to get the list of `Object of Comparison`. We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have all items, including items that are marked as deleted. Read more on why I decided to keep the soft delete approach below.
+This API is used to get the list of `Object of Comparison`, as well as the number of votes the room has got so far (`votesCount`). We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have all items, including items that are marked as deleted. Read more on why I decided to keep the soft delete approach below.
 
 ```
 REQUEST:
@@ -86,13 +87,17 @@ Parameter:
 
 ```
 RESPONSE: (when sorted=false and unfiltered = true, notice there is element with status:"DELETED")
-[
-  {"playerId":"0", "playerRating":985, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
-  {"playerId":"1", "playerRating":1105, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
-  {"playerId":"2", "playerRating":1001, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
-  {"playerId":"3", "playerRating":909, "name":"Boeing 737", "image":"<random image link>","status":"ACTIVE"},
-  {"playerId":"4","playerRating":"1000","name":"Boeing 767","image":"<random image link>","status":"DELETED"}
-]
+{
+  roomId:  "<roomId>",
+  votesCount: 35,
+  players: [
+    {"playerId":"0", "playerRating":985, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
+    {"playerId":"1", "playerRating":1105, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
+    {"playerId":"2", "playerRating":1001, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
+    {"playerId":"3", "playerRating":909, "name":"Boeing 737", "image":"<random image link>","status":"ACTIVE"},
+    {"playerId":"4","playerRating":"1000","name":"Boeing 767","image":"<random image link>","status":"DELETED"}
+  ]
+}
 ```
 
 ---
@@ -147,18 +152,18 @@ Request Body:
   changes:
     [
       {
-          "playerId": "3",
+          "playerId": "<uuid>",
           "change": "DELETE"
       },
       {
-          "playerId": "5",
+          "playerId": "<uuid>",
           "change": "EDIT",
           "values": {
               "name": "Porsche Macan"
           }
       },
       {
-          "playerId": "9",
+          "playerId": "<uuid>",
           "change": "CREATE",
           "values": {
               "playerId": "<uuid>",
@@ -197,7 +202,7 @@ If we implement a change log system, we can handle these requests in parallel wi
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/updateRating.png" alt="GetPlayers Diagram"/>
 </p>
 
-When the user submits the `/updateRanking` POST API call, API Gateway then triggers the `SendToSQSQueueFunction` Lambda function upon receiving the POST request. This Lambda function processes the initial request and sends a message to the SQS queue. The SQS queue acts as a buffer, decoupling the request processing from the response. Subsequently, Worker `UpdateRatingFunction` Lambda functions poll the SQS queue, process the messages, and update the ratings on MongoDB.
+When the user submits the `/updateRanking` POST API call, API Gateway then triggers the `SendToSQSQueueFunction` Lambda function upon receiving the POST request. This Lambda function processes the initial request and sends a message to the SQS queue. The SQS queue acts as a buffer, decoupling the request processing from the response. Subsequently, Worker `UpdateRatingFunction` Lambda functions poll the SQS queue, process the messages, update the ratings on MongoDB, as well as incrementing the `votingCount` of the room by 1.
 
 I opted to cache the `playerRating` for all `Object of Comparison` on the front end. This means the Worker `UpdateRatingFunction` Lambda function won't need to constantly query MongoDB for ratings, reducing the number of database reads. However, this also means that until the round ends, comparison objects will retain their ratings as they were when the user first loaded the game on the front end. Once all pairs have been compared, the front end will invoke the `/getPlayers` API, resetting the cache and providing the user with accurate information at the time of the API request submission.
 
@@ -286,6 +291,27 @@ Since I want to make the system scalable, I decided to use the SQS approach.
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/getStatistics.png" alt="GetPlayers Diagram"/>
 </p>
 
+This API gets the room with the most number of `votesCount`, as well as accumulating the number of votes across all the rooms, and returning it under `totalVotesCount`. This leverages MongoDB functionality that it allows me to perform `aggregate` and got the sum of the attribute member `votesCount`.
+
+```
+// MongoDB snippet from Lambda function
+
+// Aggregating the sum from $votesCount
+
+const pipeline = [
+    { $group: { _id: null, total: { $sum: "$votesCount" } } }
+];
+const aggCursor = db.collection("Room").aggregate(pipeline);
+
+// Getting the room with the greatest number of votesCount
+
+const aggCursor = db.collection("Room")
+                      .find()
+                      .sort({'votesCount': -1})
+                      .project({ roomId: 1, votesCount: 1 })
+                      .limit(1);
+```
+
 ```
 REQUEST:
 POST /GetStatistics
@@ -306,6 +332,23 @@ Status Code: 200
 ```
 
 ---
+
+## Database Schema
+```
+{
+  roomId: <string>,
+  players: [
+    {
+      playerId: <string> [uuid],
+      image: <string>,
+      name: <string>,
+      playerRating: <int>,
+      status: <string> [ACTIVE | DELETED],
+    }
+  ],
+  votesCount: <int>
+}
+```
 
 ## How do we get all players combinations to be paired?
 I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
