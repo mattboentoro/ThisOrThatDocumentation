@@ -1,6 +1,6 @@
 # This or That Application
 
-<p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1.png" width="600" alt="GetPlayers Diagram"/></p>
+<p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/></p>
 <p align="center"><a href="https://choose-this-or-that-3f8c620e977f.herokuapp.com/">Demo Link</a></p>
 
 ## What exactly is this app doing?
@@ -20,27 +20,30 @@ This app enables users to create multiple comparison rooms where votes determine
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-4.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-5.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-5-2.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-6.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-6-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 ### 3. Users can get a room, vote, and have the `rating score` updated on the backend.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 ### 4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`, as well as showing the total number of people voting on the room.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 ### 5. Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room.
-
+<p align="center">
+  <br/><br/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/>
+</p>
 
 ## What exactly is this `rating score`?
 This `rating score` is [Elo-rating](https://en.wikipedia.org/wiki/Elo_rating_system#Theory). Let's say two `Object of Comparison` compete, Object A and Object B. Object A has a rating of 1500 ($R_A = 1500$), while Object B has a rating of 1000 ($R_B = 1000$). We can calculate the expected score of Object A (expressed as $E_A$) and the expected score of Object B ($E_B$) using below's formula:
