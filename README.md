@@ -282,6 +282,10 @@ Since I want to make the system scalable, I decided to use the SQS approach.
 
 ### 5. GET `/GetStatistics`
 
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/getStatistics.png" alt="GetPlayers Diagram"/>
+</p>
+
 ```
 REQUEST:
 POST /GetStatistics
