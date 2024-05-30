@@ -556,12 +556,13 @@ I used slightly tweaked [Round Robin](https://github.com/tournament-js/roundrobi
 ## 8. Future works
 
 - [x] <s>Use React-Router to allow direct access to all pages from the URL (like `<URL>/play/<roomId>`).</s>
-- [ ] Support room deletion.
 - [x] <s>Support edit individual `Object of Comparison` after added.</s>
 - [x] <s>Validate the API calls on the front-end, and return error message accordingly.</s>
 - [x] <s>Support statistics (vote count), and show the number of votes on the home screen.</s>
 - [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
 - [ ] Make an explore page for `roomId`.
+- [ ] Support custom questions on the room.
+- [ ] Support room deletion.
 
 
 <a name="section9"/>
