@@ -6,6 +6,7 @@
 ## Table of Content
 1. [What exactly is this app doing?](#section1)  
 2. [Core functionalities supported](#section2)
+    -  2.1. [Users can create a room and list the items or people they want others to vote on](#section2.1)
 3. [What exactly is this `rating score`?](#section3)
 4. [APIs developed](#section4)
 5. [Database schema](#section5)
@@ -22,6 +23,9 @@ This app enables users to create multiple comparison rooms where votes determine
 <a name="section2"/>
 
 ## 2. Core functionalities supported
+
+<a name="section2.1"/>
+
 ### 2.1. Users can create a room and list the items or people they want others to vote on.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
