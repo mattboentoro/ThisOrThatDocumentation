@@ -73,7 +73,7 @@ If Object A wins the game against Object B, plugging in the value for new rating
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
 </p>
 
-This API is used to get the list of `Object of Comparison`, as well as the number of votes the room has got so far (`votesCount`). We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have all items, including items that are marked as deleted. Read more on why I decided to keep the soft delete approach below.
+This API is used to get the list of `Object of Comparison`, as well as the number of votes the room has got so far (`votesCount`). We have 2 parameters, `roomId` being the compulsory parameter and `sorted` is optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value.
 
 ```vbnet
 REQUEST:
@@ -82,20 +82,18 @@ GET /getPlayers?<Parameter>
 Parameter:
 - roomId: <string>
 - sorted: <boolean> [Optional]
-- unfiltered: <boolean> [Optional]
 ```
 
 ```vbnet
-RESPONSE: (when sorted=false and unfiltered = true, notice there is element with status:"DELETED")
+RESPONSE:
 {
   roomId:  "<roomId>",
   votesCount: 35,
   players: [
-    {"playerId":"0", "playerRating":985, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
-    {"playerId":"1", "playerRating":1105, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
-    {"playerId":"2", "playerRating":1001, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
-    {"playerId":"3", "playerRating":909, "name":"Boeing 737", "image":"<random image link>","status":"ACTIVE"},
-    {"playerId":"4","playerRating":"1000","name":"Boeing 767","image":"<random image link>","status":"DELETED"}
+    {"playerId":"<uuid>", "playerRating":985, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
+    {"playerId":"<uuid>", "playerRating":1105, "name":"Airbus A380", "image":"<random image link>", "status":"ACTIVE"}, 
+    {"playerId":"<uuid>", "playerRating":1001, "name":"Airbus A350", "image":"<random image link>", "status":"ACTIVE"},
+    {"playerId":"<uuid>", "playerRating":909, "name":"Boeing 737", "image":"<random image link>","status":"ACTIVE"},
   ]
 }
 ```
@@ -184,9 +182,9 @@ Status Code: 200
 ```
 
 #### 4.3.1 Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
-Consider a scenario with two users, User A and User B. User A caches data for one round, which can cause problems if User B deletes an `Object of Comparison` in the room that User A is in. If this deletion occurs, User A's message request in the SQS queue could fail because the Lambda function will try to access the now-deleted `Object of Comparison` from the MongoDB.
+Consider a scenario with two users, User A and User B. User A caches data for one round, which can cause problems if User B deletes an `Object of Comparison` in the room that User A is in. If this deletion occurs, User A's message request in the SQS queue could fail because the Lambda function will try to access the now-deleted `Object of Comparison` from MongoDB.
 
-To avoid this issue, we can mark the `Object of Comparison` as deleted instead of immediately removing them. This way, the `UpdateRating` Lambda function can still update User A’s SQS message to update the score, even though User B has deleted the `Object of Comparison`. In the following round, User A will receive the most recent data and will no longer see the deleted `Object of Comparison`.
+To avoid this issue, we can mark the `Object of Comparison` as deleted instead of immediately removing it. This way, the `UpdateRating` Lambda function can still update User A’s SQS message to update the score, even though User B has deleted the `Object of Comparison`. In the following round, User A will receive the most recent data and will no longer see the deleted `Object of Comparison`.
 
 #### 4.3.2 Why am I just keeping the changes log and not overwriting everything?
 
