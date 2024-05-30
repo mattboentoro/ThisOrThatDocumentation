@@ -8,10 +8,12 @@
 - [2. What exactly is this app doing?](#section2)
 
 <a name="section1"/>
+
 ## 1. What exactly is this app doing?
 This app enables users to create multiple comparison rooms where votes determine the rankings. Users can set up a room, list items or people for comparison, and invite others to vote. It is inspired by Mark Zuckerberg's [Facemash application](https://thesocialnetwork.fandom.com/wiki/Facemash).
 
 <a name="section2"/>
+
 ## 2. Core functionalities supported
 ### 2.1. Users can create a room and list the items or people they want others to vote on.
 <p align="center">
