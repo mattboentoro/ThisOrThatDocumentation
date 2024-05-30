@@ -33,7 +33,9 @@
      
        - 4.3.2. [Why am I just keeping the changes log and not overwriting everything?](#section4.3.2)
      
-       - 4.3.3. [Lambda functions to edit the data to MongoDB](#section4.3.3)
+       - 4.3.3. [Why then I use versioning?](#section4.3.3)
+     
+       - 4.3.4. [Lambda functions to edit the data to MongoDB](#section4.3.4)
      
     - 4.4. [POST `/UpdateRating`](#section4.4)
   
@@ -173,7 +175,8 @@ Parameter:
 RESPONSE:
 {
   roomId:  "<roomId>",
-  question: "<question>?";
+  question: "<question>?",
+  version: 2,
   votesCount: 35,
   players: [
     {"playerId":"<uuid>", "playerRating":985, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
@@ -227,7 +230,7 @@ Status Code: 200
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoom.png" alt="GetPlayers Diagram"/>
 </p>
 
-This API sets the content of the `roomId` to be `players`. Essentially, all the logic of setting `DELETED` status is handled in the front-end. The back-end will loop through the changes, and make the change according to the `changes` from the request.
+This API sets the content of the `roomId` to be `players`. Essentially, all the logic of setting `DELETED` status is handled in the front-end. The backend will first check if the `currentlyObtainedVersion` is equal to the version of the room id. If it is not the same, then the request is denied, and we prompt the user to refresh the page to get latest room version. If the `currentlyObtainedVersion` is equal, the back-end will then loop through the changes, and make the change according to the `changes` from the request.
 
 ```vbnet
 REQUEST:
@@ -235,7 +238,8 @@ POST /EditRoom
 
 Request Body:
 {
-  roomId: "12349"
+  roomId: "12349",
+  currentlyObtainedVersion: 2,
   changes:
     [
       {
@@ -291,7 +295,13 @@ If we implement a change log system, we can handle these requests in parallel wi
 
 <a name="section4.3.3"/>
 
-#### 4.3.3. Lambda functions to edit the data to MongoDB
+#### 4.3.3. Why then I use versioning?
+
+I want to ensure the best customer experience. In the case when the user updates one item, and another user updates the other item, although the backend could theoretically handle the 2 requests independently, I want to ensure the WYSWYG (what you see is what you get) experience. So let's say User A currently make some changes based on version 5, and in the middle, some other user made the change (and therefore the current version is version 6). When User A submits the changes, it will return error, informing the user that they need to refresh the page to obtain the latest version first.
+
+<a name="section4.3.4"/>
+
+#### 4.3.4. Lambda functions to edit the data to MongoDB
 
 ```js
 async function updateGameQuestion(db, roomId, values) {
@@ -564,7 +574,8 @@ Status Code: 200
     }
   ],
   "votesCount": "<int>",
-  "question": "<string>"
+  "question": "<string>",
+  "version": "<int>"
 }
 ```
 
@@ -591,9 +602,8 @@ I used slightly tweaked [Round Robin](https://github.com/tournament-js/roundrobi
 - [x] <s>Validate the API calls on the front-end, and return error message accordingly.</s>
 - [x] <s>Support statistics (vote count), and show the number of votes on the home screen.</s>
 - [x] <s>Support custom questions on the room.</s>
-- [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
+- [x] <s>Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.</s>
 - [ ] Make an explore page for `roomId`.
-
 - [ ] Support room deletion.
 
 
