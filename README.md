@@ -540,7 +540,7 @@ Status Code: 200
 <a name="section6"/>
 
 ## 6. How do we get all players combinations to be paired?
-I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
+I used slightly tweaked [Round Robin](https://github.com/tournament-js/roundrobin?tab=readme-ov-file) algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
 
 <a name="section7"/>
 
