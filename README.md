@@ -360,7 +360,7 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
   - More complex load management within a single Lambda function.
 
 
-##### Chosen Alternative 2: Using SQS Approach
+#### Chosen Alternative 2: Using SQS Approach
 **Pros**:
   - Better scalability and load handling due to decoupling.
   - Improved fault tolerance with message retry mechanisms.
