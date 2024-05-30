@@ -17,7 +17,7 @@
       
     -  2.5. [Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room](#section2.5)
   
-    -  2.6. [2.6. Users can change the question prompt of their room.](#section2.6)
+    -  2.6. [Users can change the question prompt of their room.](#section2.6)
 
 3. [What exactly is this `rating score`?](#section3)
 
