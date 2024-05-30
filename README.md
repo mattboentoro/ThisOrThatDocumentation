@@ -4,8 +4,15 @@
 <p align="center"><a href="https://choose-this-or-that-3f8c620e977f.herokuapp.com/">Demo Link</a></p>
 
 ## Table of Content
-- [1. What exactly is this app doing?](#section1)  
-- [2. What exactly is this app doing?](#section2)
+1. [What exactly is this app doing?](#section1)  
+2. [Core functionalities supported](#section2)
+3. [What exactly is this `rating score`?](#section3)
+4. [APIs developed](#section4)
+5. [Database schema](#section5)
+6. [How do we get all players combinations to be paired?](#section6)
+7. [Why do I use MongoDB compared to other database option?](#section7)
+8. [Future works](#section8)
+9. [Helpful links that helped me during the project](#section9)
 
 <a name="section1"/>
 
@@ -54,6 +61,8 @@ This app enables users to create multiple comparison rooms where votes determine
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
+<a name="section3"/>
+
 ## 3. What exactly is this `rating score`?
 This `rating score` is [Elo-rating](https://en.wikipedia.org/wiki/Elo_rating_system#Theory). Let's say two `Object of Comparison` compete, Object A and Object B. Object A has a rating of 1500 ($R_A = 1500$), while Object B has a rating of 1000 ($R_B = 1000$). We can calculate the expected score of Object A (expressed as $E_A$) and the expected score of Object B ($E_B$) using below's formula:
 
@@ -72,6 +81,9 @@ $$R_B' = R_B + K(S_B - E_B)$$
 Where $S_A$ and $S_B$ are the scores of A and B respectively. If Object A wins, then $S_A = 1$ and $S_B = 0$. Likewise, if Object 2 wins, then $S_A = 0$ and $S_B = 1$. The adjustment factor, the $K$, is set to 32.
 
 If Object A wins the game against Object B, plugging in the value for new rating, we got $R_A' = 1502$ and $R_B' = 998$ (difference in rating $\pm 2$). On the contrary, if Object B pulls a surprise win against Object A, we get $R_A' = 1470$ and $R_B' = 1030$ (difference in rating $\pm 30$). This happens since it is expected that Object A will win against Object B. If for some reason, Object B wins against Object A, the increase in rating will be significant to help "course-correct".
+
+
+<a name="section4"/>
 
 ## 4. APIs developed
 
@@ -430,6 +442,8 @@ Status Code: 200
 
 ---
 
+<a name="section5"/>
+
 ## 5. Database Schema
 ```json
 {
@@ -447,14 +461,21 @@ Status Code: 200
 }
 ```
 
+<a name="section6"/>
+
 ## 6. How do we get all players combinations to be paired?
 I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
+
+<a name="section7"/>
 
 ## 7. Why do I use MongoDB compared to other database option?
 - Seamless integration with Node.js-backed Lambda.
 - Supports data aggregation that I needed for `/getStatistics`.
 - Supports `$inc` increment function that is atomic to update various attribute members.
 - Better table scan performance.
+
+
+<a name="section8"/>
 
 ## 8. Future works
 
@@ -465,6 +486,9 @@ I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobi
 - [x] <s>Support statistics (vote count), and show the number of votes on the home screen.</s>
 - [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
 - [ ] Make an explore page for `roomId`.
+
+
+<a name="section9"/>
 
 ## 9. Helpful links that helped me during the project:
 
