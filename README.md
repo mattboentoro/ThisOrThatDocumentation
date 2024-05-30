@@ -16,6 +16,8 @@
     -  2.4. [Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`, as well as showing the total number of people voting on the room](#section2.4)
       
     -  2.5. [Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room](#section2.5)
+  
+    -  2.6. [2.6. Users can change the question prompt of their room.](#section2.6)
 
 3. [What exactly is this `rating score`?](#section3)
 
@@ -72,7 +74,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-7.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-7-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.2"/>
@@ -81,7 +83,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow3.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-4.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-4-3.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-5-2.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
@@ -94,7 +96,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.4"/>
@@ -103,7 +105,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.5"/>
@@ -113,6 +115,13 @@ This app enables users to create multiple comparison rooms where votes determine
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/seeStatisticsFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/>
+</p>
+
+<a name="section2.6"/>
+
+### 2.6. Users can change the question prompt of their room.
+<p align="center">
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-8.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section3"/>
@@ -164,6 +173,7 @@ Parameter:
 RESPONSE:
 {
   roomId:  "<roomId>",
+  question: "<question>?";
   votesCount: 35,
   players: [
     {"playerId":"<uuid>", "playerRating":985, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
@@ -191,7 +201,8 @@ POST /CreateNewRoom
 
 Request Body:
 {
-  roomId: "12349"
+  roomId: "12349",
+  question: "<random question>",
   players:
     [
       {"playerId":"<uuid>", "playerRating":1000, "name":"Boeing 747", "image":"<random image link>", "status":"ACTIVE"},  
@@ -227,6 +238,10 @@ Request Body:
   roomId: "12349"
   changes:
     [
+      {
+          "values": "<new title>",
+          "change": "EDIT TITLE"
+      },
       {
           "playerId": "<uuid>",
           "change": "DELETE"
@@ -279,6 +294,21 @@ If we implement a change log system, we can handle these requests in parallel wi
 #### 4.3.3. Lambda functions to edit the data to MongoDB
 
 ```js
+async function updateGameQuestion(db, roomId, values) {
+    /*
+      Executed when we need to change the game question of a particular roomId. We are simply setting
+      the "question" field to be 'values'.
+    */
+    const result = await db.collection("Room")
+        .updateOne(
+            {"roomId" :  roomId},
+            {$set: {
+                'question': values,
+            }}
+        );
+    return result;
+}
+
 async function deletePlayer(db, roomId, playerId) {
     /*
       Executed when we need to delete a particular player with ID === playerId. We are simply setting
@@ -533,7 +563,8 @@ Status Code: 200
       "status": "<string> [ACTIVE | DELETED]",
     }
   ],
-  "votesCount": "<int>"
+  "votesCount": "<int>",
+  "question": "<string>"
 }
 ```
 
@@ -559,9 +590,10 @@ I used slightly tweaked [Round Robin](https://github.com/tournament-js/roundrobi
 - [x] <s>Support edit individual `Object of Comparison` after added.</s>
 - [x] <s>Validate the API calls on the front-end, and return error message accordingly.</s>
 - [x] <s>Support statistics (vote count), and show the number of votes on the home screen.</s>
+- [x] <s>Support custom questions on the room.</s>
 - [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
 - [ ] Make an explore page for `roomId`.
-- [ ] Support custom questions on the room.
+
 - [ ] Support room deletion.
 
 
