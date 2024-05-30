@@ -75,7 +75,7 @@ If Object A wins the game against Object B, plugging in the value for new rating
 
 This API is used to get the list of `Object of Comparison`, as well as the number of votes the room has got so far (`votesCount`). We have 3 parameters, `roomId` being the compulsory parameter, both `sorted` and `unfiltered` are optional. This API will trigger a Lambda function that will get the room details from MongoDB table. If the user sets `sorted` to be true (mainly used in the game scenario and leaderboard), the response will be sorted according to the `playerRating` value. If the user sets the `unfiltered` value to be true (mainly used in editing the room scenario), the response will have all items, including items that are marked as deleted. Read more on why I decided to keep the soft delete approach below.
 
-```
+```vbnet
 REQUEST:
 GET /getPlayers?<Parameter>
 
@@ -85,7 +85,7 @@ Parameter:
 - unfiltered: <boolean> [Optional]
 ```
 
-```
+```vbnet
 RESPONSE: (when sorted=false and unfiltered = true, notice there is element with status:"DELETED")
 {
   roomId:  "<roomId>",
@@ -110,7 +110,7 @@ RESPONSE: (when sorted=false and unfiltered = true, notice there is element with
 
 This API creates a room with a specified `roomId` and a list of players. When a new room is created, every player starts with a score of 1000, which is managed by the front end. The front end also validates whether a room with the given `roomId` already exists. When the user enters a `roomId`, a request is sent to the /getPlayers API to retrieve the current list of `Object of Comparison`. If no such room exists, the API is then called.
 
-```
+```vbnet
 REQUEST:
 POST /CreateNewRoom
 
@@ -126,7 +126,7 @@ Request Body:
 }
 ```
 
-```
+```vbnet
 RESPONSE:
 Status Code: 200
 {"acknowledged":true,"insertedId":"<random-id>"}
@@ -142,7 +142,7 @@ Status Code: 200
 
 This API sets the content of the `roomId` to be `players`. Essentially, all the logic of setting `DELETED` status is handled in the front-end. The back-end will loop through the changes, and make the change according to the `changes` from the request.
 
-```
+```vbnet
 REQUEST:
 POST /EditRoom
 
@@ -177,7 +177,7 @@ Request Body:
 }
 ```
 
-```
+```vbnet
 RESPONSE:
 Status Code: 200
 "Success"
@@ -323,7 +323,7 @@ async function updateRankingFunction(db, winningPlayer, losingPlayer, roomId) {
 ```
 
 
-```
+```vbnet
 REQUEST:
 POST /UpdateRanking
 
@@ -337,7 +337,7 @@ Request Body:
 }
 ```
 
-```
+```vbnet
 RESPONSE:
 Status Code: 200
 {"message":"Message sent to SQS","messageId":"<randomId>"}
@@ -403,12 +403,12 @@ const aggCursor = db.collection("Room")
                       .limit(1);
 ```
 
-```
+```vbnet
 REQUEST:
 POST /GetStatistics
 ```
 
-```
+```vbnet
 RESPONSE:
 Status Code: 200
 {
@@ -460,7 +460,7 @@ I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobi
 - [ ] Support versioning for `updateRoom`. Essentially, adding a field on the table namely `version`, which gets incremented every time `updateRoom` is called successfully. If the room is in version 6, and the request comes in based on version < 6, we can reject the request.
 - [ ] Make an explore page for `roomId`.
 
-## Helpful links that helped me during the project:
+## 9. Helpful links that helped me during the project:
 
 - https://github.com/tournament-js/roundrobin?tab=readme-ov-file 
 - https://www.mongodb.com/docs/manual/reference/operator/update/inc/
