@@ -3,18 +3,18 @@
 <p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/></p>
 <p align="center"><a href="https://choose-this-or-that-3f8c620e977f.herokuapp.com/">Demo Link</a></p>
 
-## What exactly is this app doing?
+## 1. What exactly is this app doing?
 This app enables users to create multiple comparison rooms where votes determine the rankings. Users can set up a room, list items or people for comparison, and invite others to vote. It is inspired by Mark Zuckerberg's [Facemash application](https://thesocialnetwork.fandom.com/wiki/Facemash).
 
-## Core functionalities supported
-### 1. Users can create a room and list the items or people they want others to vote on.
+## 2. Core functionalities supported
+### 2.1. Users can create a room and list the items or people they want others to vote on.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-7.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-### 2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
+### 2.2. Users can edit a room, insert new items or people (let's call it `Object of Comparison`), or delete existing items or people.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow3.png" alt="GetPlayers Diagram"/>
   <br/><br/>
@@ -25,28 +25,28 @@ This app enables users to create multiple comparison rooms where votes determine
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-6-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-### 3. Users can get a room, vote, and have the `rating score` updated on the backend.
+### 2.3. Users can get a room, vote, and have the `rating score` updated on the backend.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-### 4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`, as well as showing the total number of people voting on the room.
+### 2.4. Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`, as well as showing the total number of people voting on the room.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-### 5. Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room.
+### 2.5. Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room.
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/seeStatisticsFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
-## What exactly is this `rating score`?
+## 3. What exactly is this `rating score`?
 This `rating score` is [Elo-rating](https://en.wikipedia.org/wiki/Elo_rating_system#Theory). Let's say two `Object of Comparison` compete, Object A and Object B. Object A has a rating of 1500 ($R_A = 1500$), while Object B has a rating of 1000 ($R_B = 1000$). We can calculate the expected score of Object A (expressed as $E_A$) and the expected score of Object B ($E_B$) using below's formula:
 
 $$ E_A = {1 \over 1 + 10 ^ {(R_B - R_A)/400}} $$
@@ -65,9 +65,9 @@ Where $S_A$ and $S_B$ are the scores of A and B respectively. If Object A wins, 
 
 If Object A wins the game against Object B, plugging in the value for new rating, we got $R_A' = 1502$ and $R_B' = 998$ (difference in rating $\pm 2$). On the contrary, if Object B pulls a surprise win against Object A, we get $R_A' = 1470$ and $R_B' = 1030$ (difference in rating $\pm 30$). This happens since it is expected that Object A will win against Object B. If for some reason, Object B wins against Object A, the increase in rating will be significant to help "course-correct".
 
-## APIs developed
+## 4. APIs developed
 
-### 1. GET `/GetPlayers`
+### 4.1. GET `/GetPlayers`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/getPlayerDiagram.png" alt="GetPlayers Diagram"/>
@@ -102,7 +102,7 @@ RESPONSE: (when sorted=false and unfiltered = true, notice there is element with
 
 ---
 
-### 2. POST `/CreateNewRoom`
+### 4.2. POST `/CreateNewRoom`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoom.png" alt="GetPlayers Diagram"/>
@@ -134,7 +134,7 @@ Status Code: 200
 
 ---
 
-### 3. POST `/EditRoom`
+### 4.3. POST `/EditRoom`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoom.png" alt="GetPlayers Diagram"/>
@@ -183,18 +183,18 @@ Status Code: 200
 "Success"
 ```
 
-#### Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
+#### 4.3.1 Why do I decide to mark the deleted `Object of Comparison` (soft delete) rather than actually deleting the `Object of Comparison` (hard delete)?
 Consider a scenario with two users, User A and User B. User A caches data for one round, which can cause problems if User B deletes an `Object of Comparison` in the room that User A is in. If this deletion occurs, User A's message request in the SQS queue could fail because the Lambda function will try to access the now-deleted `Object of Comparison` from the MongoDB.
 
 To avoid this issue, we can mark the `Object of Comparison` as deleted instead of immediately removing them. This way, the `UpdateRating` Lambda function can still update User A’s SQS message to update the score, even though User B has deleted the `Object of Comparison`. In the following round, User A will receive the most recent data and will no longer see the deleted `Object of Comparison`.
 
-#### Why am I just keeping the changes log and not overwriting everything?
+#### 4.3.2 Why am I just keeping the changes log and not overwriting everything?
 
 Let's consider two users, User A and User B, who attempt to access the edit room functionality simultaneously. If the system simply overwrites values, the final value retained in the system will be from the user who submits their editRoom request last, resulting in the earlier submission being overwritten.
 
 If we implement a change log system, we can handle these requests in parallel without losing any information. Each request can be recorded as a distinct entry in the change log, capturing all changes made by both users. This way, the system does not need to wait for one request to complete before processing the next one, thereby potentially saving time and improving efficiency. Additionally, using a change log allows for better tracking of changes and conflict resolution, ensuring that all user edits are preserved and can be merged or reviewed as needed.
 
-#### Lambda functions to edit the data to MongoDB
+#### 4.3.3. Lambda functions to edit the data to MongoDB
 
 ```js
 async function deletePlayer(db, roomId, playerId) {
@@ -261,7 +261,7 @@ async function createPlayer(db, roomId, values) {
 
 ---
 
-### 4. POST `/UpdateRating`
+### 4.4. POST `/UpdateRating`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/updateRating.png" alt="GetPlayers Diagram"/>
@@ -271,7 +271,7 @@ When the user submits the `/updateRanking` POST API call, API Gateway then trigg
 
 I opted to cache the `playerRating` for all `Object of Comparison` on the front end. This means the Worker `UpdateRatingFunction` Lambda function won't need to constantly query MongoDB for ratings, reducing the number of database reads. However, this also means that until the round ends, comparison objects will retain their ratings as they were when the user first loaded the game on the front end. Once all pairs have been compared, the front end will invoke the `/getPlayers` API, resetting the cache and providing the user with accurate information at the time of the API request submission.
 
-#### `UpdateRating` Lambda Function (Worker Function) Logic
+#### 4.4.1. `UpdateRating` Lambda Function (Worker Function) Logic
 
 I've chosen to calculate the difference in `Object of Comparison`'s ratings and delegate the task of incrementing the MongoDB value to the SQS Worker `UpdateRatingFunction` Lambda. With users having a cache of player ratings, we can utilize it to compute the difference between old and new ratings for both players. This difference is then incremented to MongoDB by the SQS Worker `UpdateRatingFunction` Lambda.
 
@@ -296,7 +296,7 @@ Why opt for incrementing/decrementing the difference instead of directly updatin
 
 According to the earlier Elo-Score calculation, `Object of Comparison` with ID `2` should gain an additional `30 + 30 = 60` points, resulting in a rating of `1060`. However, if we directly set the value (instead of using increment) from the Worker Lambda, we'll only obtain `1030`, which was the last rating value written by the last message from the queue (as values get overwritten). Since the calculation is independent for each message using the information provided from the JSON, using an increment method ensures that the score can be updated to reflect all votes. This approach enables us to still obtain a close-to-accurate rating from the cached values.
 
-#### Lambda function to increment the values of the 2 players
+#### 4.4.2. Lambda function to increment the values of the 2 players
 ```js
 async function updateRankingFunction(db, winningPlayer, losingPlayer, roomId) {
     // get the difference in rating using the function getNewRatingAddition
@@ -343,7 +343,7 @@ Status Code: 200
 {"message":"Message sent to SQS","messageId":"<randomId>"}
 ```
 
-#### Architectural Alternative 1: Direct Handling (Not Recommended)
+#### 4.4.3. Architectural Alternative 1: Direct Handling (Not Recommended)
 
 The other approach is to handle the update rating on the lambda which is directly invoked by the `/updateRating` API.
 
@@ -360,7 +360,7 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
   - More complex load management within a single Lambda function.
 
 
-#### Chosen Alternative 2: Using SQS Approach
+#### 4.4.4. Chosen Alternative 2: Using SQS Approach
 **Pros**:
   - Better scalability and load handling due to decoupling.
   - Improved fault tolerance with message retry mechanisms.
@@ -371,12 +371,12 @@ The client sends a POST request to the `/updateRating` API. The API Gateway rece
   - Potentially higher latency due to asynchronous processing.
   - Additional costs associated with SQS and multiple Lambda invocations.
 
-#### Verdict
+#### 4.4.5. Verdict
 Since I want to make the system scalable, I decided to use the SQS approach.
 
 ---
 
-### 5. GET `/GetStatistics`
+### 4.5. GET `/GetStatistics`
 
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/getStatistics.png" alt="GetPlayers Diagram"/>
@@ -424,7 +424,7 @@ Status Code: 200
 
 ---
 
-## Database Schema
+## 5. Database Schema
 ```json
 {
   "roomId": "<string>",
@@ -441,16 +441,16 @@ Status Code: 200
 }
 ```
 
-## How do we get all players combinations to be paired?
+## 6. How do we get all players combinations to be paired?
 I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
 
-## Why do I use MongoDB compared to other database option?
+## 7. Why do I use MongoDB compared to other database option?
 - Seamless integration with Node.js-backed Lambda.
 - Supports data aggregation that I needed for `/getStatistics`.
 - Supports `$inc` increment function that is atomic to update various attribute members.
 - Better table scan performance.
 
-## Future works
+## 8. Future works
 
 - [x] <s>Use React-Router to allow direct access to all pages from the URL (like `<URL>/play/<roomId>`).</s>
 - [ ] Support room deletion.
