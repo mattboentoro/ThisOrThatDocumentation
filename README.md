@@ -194,6 +194,71 @@ Let's consider two users, User A and User B, who attempt to access the edit room
 
 If we implement a change log system, we can handle these requests in parallel without losing any information. Each request can be recorded as a distinct entry in the change log, capturing all changes made by both users. This way, the system does not need to wait for one request to complete before processing the next one, thereby potentially saving time and improving efficiency. Additionally, using a change log allows for better tracking of changes and conflict resolution, ensuring that all user edits are preserved and can be merged or reviewed as needed.
 
+#### Lambda functions to edit the data to MongoDB
+
+```js
+async function deletePlayer(db, roomId, playerId) {
+    /*
+      Executed when we need to delete a particular player with ID === playerId. We are simply setting
+      the "status" field to be "DELETED" to mark the item as deleted. Since we need to make
+      alteration inside an array (which is a member attribute of the "Room" collection),
+      we need to use arrayFilter to make adjustment to edit specific member of the array.
+    */
+
+    const result = await db.collection("Room");
+        .updateOne(
+            {"roomId" :  roomId},
+            {$set: {
+                'players.$[x].status': "DELETED",
+            }},
+            {arrayFilters: [
+                {"x.playerId": playerId},
+            ]}
+        );
+    return result;
+}
+
+async function editPlayer(db, roomId, playerId, values) {
+    /*
+      Executed when we need to edit a particular player with ID === playerId.
+      Each changed field is contained in the values as key-value pairing. We
+      first need to extract the key-value pairing, and adjust it to mimic
+      our MongoDB query.
+    */
+
+    // adjusting the key-value pairing of values
+    let editQuery = {};
+    Object.keys(values).forEach(function(key) {
+        editQuery[`players.$[x].${key}`] = values[key];
+    })
+
+    // executing MongoDB function using the adjusted values
+    const result = await db.collection("Room")
+    .updateOne(
+        {"roomId" :  roomId},
+        {$set: editQuery},
+        {arrayFilters: [
+            {"x.playerId": playerId},
+        ]}
+    );
+    return result;
+}
+
+async function createPlayer(db, roomId, values) {
+    /*
+      Executed when we need to create a particular player. We are
+      simply pushing the value to our players attribute, which
+      happens to be an array.
+    */
+
+    const result = await db.collection("Room")
+        .updateOne(
+            {"roomId" :  roomId},
+            {$push: {players: values}}
+        );
+}
+```
+
 ---
 
 ### 4. POST `/UpdateRating`
@@ -212,7 +277,7 @@ I've chosen to calculate the difference in `Object of Comparison`'s ratings and 
 
 Why opt for incrementing/decrementing the difference instead of directly updating to the new rating in the Worker `UpdateRatingFunction` Lambda? Consider this scenario: two identical SQS messages arrive simultaneously from different users playing at the same time.
 
-```
+```json
 {
   "roomId": "12345",
   "losingPlayerId": "1",
@@ -230,6 +295,32 @@ Why opt for incrementing/decrementing the difference instead of directly updatin
 ```
 
 According to the earlier Elo-Score calculation, `Object of Comparison` with ID `2` should gain an additional `30 + 30 = 60` points, resulting in a rating of `1060`. However, if we directly set the value (instead of using increment) from the Worker Lambda, we'll only obtain `1030`, which was the last rating value written by the last message from the queue (as values get overwritten). Since the calculation is independent for each message using the information provided from the JSON, using an increment method ensures that the score can be updated to reflect all votes. This approach enables us to still obtain a close-to-accurate rating from the cached values.
+
+#### Lambda function to increment the values of the 2 players
+```js
+async function updateRankingFunction(db, winningPlayer, losingPlayer, roomId) {
+    // get the difference in rating using the function getNewRatingAddition
+    const differenceInRating = getNewRatingAddition(winningPlayer.rating, losingPlayer.rating);
+
+    // update to MongoDB, using inc, and setting the increment of the 2 values directly
+    // to maintain atomicity
+    const result = await db.collection("Room").updateOne(
+        {"roomId" :  roomId},
+        {$inc: {
+            'players.$[x].playerRating': differenceInRating[0],
+            'players.$[y].playerRating': differenceInRating[1],
+            'votesCount': 1
+        }},
+        {arrayFilters: [
+            {"x.playerId": winningPlayer.id},
+            {"y.playerId": losingPlayer.id}
+        ]}
+    );
+
+    return result;
+}
+
+```
 
 
 ```
@@ -293,7 +384,7 @@ Since I want to make the system scalable, I decided to use the SQS approach.
 
 This API gets the room with the most number of `votesCount`, as well as accumulating the number of votes across all the rooms, and returning it under `totalVotesCount`. This leverages MongoDB functionality that it allows me to perform `aggregate` and got the sum of the attribute member `votesCount`.
 
-```
+```js
 // MongoDB snippet from Lambda function
 
 // Aggregating the sum from $votesCount
@@ -334,24 +425,30 @@ Status Code: 200
 ---
 
 ## Database Schema
-```
+```json
 {
-  roomId: <string>,
-  players: [
+  "roomId": "<string>",
+  "players": [
     {
-      playerId: <string> [uuid],
-      image: <string>,
-      name: <string>,
-      playerRating: <int>,
-      status: <string> [ACTIVE | DELETED],
+      "playerId": "<string> [uuid]",
+      "image": "<string>",
+      "name": "<string>",
+      "playerRating": "<int>",
+      "status": "<string> [ACTIVE | DELETED]",
     }
   ],
-  votesCount: <int>
+  "votesCount": "<int>"
 }
 ```
 
 ## How do we get all players combinations to be paired?
 I used slightly tweaked (Round Robin)[https://github.com/tournament-js/roundrobin?tab=readme-ov-file ] algorithm to get a pairing list of two `Object of Comparison`, such that all `Object of Comparison` will get to meet one another on one round. This is done on the front end, after the user gets the room information from `/getRooms` API.
+
+## Why do I use MongoDB compared to other database option?
+- Seamless integration with Node.js-backed Lambda.
+- Supports data aggregation that I needed for `/getStatistics`.
+- Supports `$inc` increment function that is atomic to update various attribute members.
+- Better table scan performance.
 
 ## Future works
 
