@@ -1,6 +1,6 @@
 # VoteNow Application
 
-<p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/></p>
+<p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-1.png" width="600" alt="GetPlayers Diagram"/></p>
 <p align="center"><a href="https://choose-this-or-that-3f8c620e977f.herokuapp.com/](https://vote-now.netlify.app/">Demo Link</a></p>
 
 ## Table of Content
@@ -76,7 +76,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-7-5.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-8.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.2"/>
@@ -85,11 +85,11 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow3.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-4-5.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-4.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-5-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-5.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-6-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-7.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.3"/>
@@ -98,7 +98,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2-5.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.4"/>
@@ -107,7 +107,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3-5.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-3.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.5"/>
@@ -116,14 +116,14 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/seeStatisticsFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-1.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.6"/>
 
 ### 2.6. Users can change the question prompt of their room.
 <p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-8.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-6.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section3"/>
