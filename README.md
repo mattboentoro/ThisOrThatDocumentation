@@ -76,7 +76,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-7-4.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-7-5.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.2"/>
@@ -85,7 +85,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow3.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-4-4.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-4-5.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-5-2.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
@@ -98,7 +98,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2-3.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-2-5.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.4"/>
@@ -107,7 +107,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3-3.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-3-5.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.5"/>
