@@ -1,7 +1,7 @@
 # VoteNow Application
 
 <p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/this-or-that-pic-1-2.png" width="600" alt="GetPlayers Diagram"/></p>
-<p align="center"><a href="https://choose-this-or-that-3f8c620e977f.herokuapp.com/">Demo Link</a></p>
+<p align="center"><a href="https://choose-this-or-that-3f8c620e977f.herokuapp.com/](https://vote-now.netlify.app/">Demo Link</a></p>
 
 ## Table of Content
 1. [What exactly is this app doing?](#section1)
