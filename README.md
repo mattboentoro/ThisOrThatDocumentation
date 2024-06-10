@@ -1,6 +1,6 @@
 # VoteNow Application
 
-<p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-1.png" width="600" alt="GetPlayers Diagram"/></p>
+<p align="center"><img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-1.png" width="600" alt="GetPlayers Diagram"/></p>
 <p align="center"><a href="https://choose-this-or-that-3f8c620e977f.herokuapp.com/](https://vote-now.netlify.app/">Demo Link</a></p>
 
 ## Table of Content
@@ -16,8 +16,6 @@
     -  2.4. [Users can see the leaderboard of that particular room, which contains a list of active `Object of Comparison` sorted in descending order of the `rating score`, as well as showing the total number of people voting on the room](#section2.4)
       
     -  2.5. [Users can see the overall statistics of the site, seeing how many users voted across all the rooms, and the most popular `roomId` by the total number of users voted on that room](#section2.5)
-  
-    -  2.6. [Users can change the question prompt of their room.](#section2.6)
 
 3. [What exactly is this `rating score`?](#section3)
 
@@ -76,7 +74,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/createNewRoomFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-8.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-14.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.2"/>
@@ -85,11 +83,15 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/editRoomFlow3.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-4.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-16.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-5.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-10.png" width="600" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-7.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-11.png" width="600" alt="GetPlayers Diagram"/>
+   <br/><br/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-12.png" width="600" alt="GetPlayers Diagram"/>
+   <br/><br/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-13.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.3"/>
@@ -98,7 +100,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/playFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-2.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-8.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.4"/>
@@ -107,7 +109,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/leaderboardFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-3.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-9.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section2.5"/>
@@ -116,14 +118,7 @@ This app enables users to create multiple comparison rooms where votes determine
 <p align="center">
   <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/seeStatisticsFlow.png" alt="GetPlayers Diagram"/>
   <br/><br/>
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-1.png" width="600" alt="GetPlayers Diagram"/>
-</p>
-
-<a name="section2.6"/>
-
-### 2.6. Users can change the question prompt of their room.
-<p align="center">
-  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-6.png" width="600" alt="GetPlayers Diagram"/>
+  <img src="https://github.com/mattboentoro/ThisOrThatDocumentation/blob/main/pictures/vote-now-pic-2.png" width="600" alt="GetPlayers Diagram"/>
 </p>
 
 <a name="section3"/>
